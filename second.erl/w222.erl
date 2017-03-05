@@ -19,10 +19,24 @@ main() ->
     % io:fwrite("~w~n",[partition(8,[])]),
     % io:fwrite("~w~n",[partition(8,[13])]),
     % io:fwrite("~w~n",[quickSort([2,45,23,6,1,4,3,9,6,7,8,4])]),
-    io:fwrite("~w~n",[perm([1,2,3])]).
+    perm([1,2,3,4,5]).
 
-perm([]) -> [[]];
-perm(L) -> [ [X|Y] || X<-L, Y<-perm(L--[X]) ].
+% perm1([]) -> [[]];
+% perm1(L) -> [ [X|Y] || X<-L, Y<-perm1(L--[X]) ].
+
+perm(Xs) -> perm(Xs,Xs,[]).
+perm([],[],R) -> [reverse(R)];
+perm([],_,_) -> [];
+perm([X|Xs],P,R) ->
+    perm(P--[X], P--[X],[X|R]) ++ perm(Xs,P,R).
+
+% dispAllComb(Xs) -> dispAllComb(Xs,Xs,[]).
+% dispAllComb([],[],R) -> erlang:display(reverse(R));
+% dispAllComb([],_,_) -> null;
+% dispAllComb([X|Xs],P,R) ->
+%     erlang:display(reverse([X|R])),
+%     dispAllComb(P--[X], P--[X],[X|R]),
+%     dispAllComb(Xs,P,R).
 
 % join([],[]) -> [];
 % join([],[Y|Ys]) -> 
@@ -65,9 +79,9 @@ perm(L) -> [ [X|Y] || X<-L, Y<-perm(L--[X]) ].
 % split(N,[X|Xs],Ls) ->
 %     split(N-1,Xs,[X|Ls]).
 
-% reverse(Xs) -> reverse(Xs, []).
-% reverse([],R) -> R;
-% reverse([X|Xs],R) -> reverse(Xs, [X|R]).
+reverse(Xs) -> reverse(Xs, []).
+reverse([],R) -> R;
+reverse([X|Xs],R) -> reverse(Xs, [X|R]).
 
 % member(_N,[]) -> false;
 % member(X,[X|_Xs]) -> true;
